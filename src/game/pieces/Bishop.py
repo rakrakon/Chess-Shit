@@ -1,11 +1,11 @@
 from typing import List, Optional
 
-from src.game.Constants import Constants
+from src.game.Constants import BOARD_SIZE
 from src.game.pieces.Piece import Piece
 
 
 class Bishop(Piece):
-    def get_valid_moves(self, board, position: tuple[int, int]) -> List[tuple[int, int]]:
+    def get_valid_moves(self, board: List[List[Optional[Piece]]], position: tuple[int, int]) -> List[tuple[int, int]]:
         valid_moves: List[tuple[int, int]] = []
         x, y = position
 
@@ -20,7 +20,7 @@ class Bishop(Piece):
                 break
 
         # Up-right
-        for i, j in zip(range(x - 1, -1, -1), range(y + 1, Constants.BOARD_SIZE)):
+        for i, j in zip(range(x - 1, -1, -1), range(y + 1, BOARD_SIZE)):
             if board[i][j] is None:
                 valid_moves.append((i, j))
             elif board[i][j].color != self.color:
@@ -30,7 +30,7 @@ class Bishop(Piece):
                 break
 
         # Down-left
-        for i, j in zip(range(x + 1, Constants.BOARD_SIZE), range(y - 1, -1, -1)):
+        for i, j in zip(range(x + 1, BOARD_SIZE), range(y - 1, -1, -1)):
             if board[i][j] is None:
                 valid_moves.append((i, j))
             elif board[i][j].color != self.color:
@@ -40,7 +40,7 @@ class Bishop(Piece):
                 break
 
         # Down-right
-        for i, j in zip(range(x + 1, Constants.BOARD_SIZE), range(y + 1, Constants.BOARD_SIZE)):
+        for i, j in zip(range(x + 1, BOARD_SIZE), range(y + 1, BOARD_SIZE)):
             if board[i][j] is None:
                 valid_moves.append((i, j))
             elif board[i][j].color != self.color:

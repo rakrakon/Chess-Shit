@@ -1,17 +1,17 @@
 from typing import List, Optional
 
-from src.game.Constants import Constants
+from src.game.Constants import BOARD_SIZE
 from src.game.pieces.Piece import Piece
 
 
 class Rook(Piece):
-    def get_valid_moves(self, board, position: tuple[int, int]) -> List[tuple[int, int]]:
+    def get_valid_moves(self, board: List[List[Optional[Piece]]], position: tuple[int, int]) -> List[tuple[int, int]]:
         valid_moves: List[tuple[int, int]] = []
 
         x, y = position
 
         # Horizontal Right
-        for i in range(x + 1, Constants.BOARD_SIZE):
+        for i in range(x + 1, BOARD_SIZE):
             if board[y][i] is None:
                 valid_moves.append((i, y))
             elif board[y][i].color != self.color:
@@ -21,7 +21,7 @@ class Rook(Piece):
                 break
 
         # Horizontal Left
-        for i in range(x - 1, Constants.BOARD_SIZE, -1):
+        for i in range(x - 1, BOARD_SIZE, -1):
             if board[y][i] is None:
                 valid_moves.append((i, y))
             elif board[y][i].color != self.color:
@@ -31,7 +31,7 @@ class Rook(Piece):
                 break
 
         # Vertical Up
-        for i in range(y + 1, Constants.BOARD_SIZE):
+        for i in range(y + 1, BOARD_SIZE):
             if board[i][x] is None:
                 valid_moves.append((x, i))
             elif board[i][x].color != self.color:
@@ -41,7 +41,7 @@ class Rook(Piece):
                 break
 
         # Vertical Down
-        for i in range(y - 1, Constants.BOARD_SIZE, -1):
+        for i in range(y - 1, BOARD_SIZE, -1):
             if board[i][x] is None:
                 valid_moves.append((x, i))
             elif board[i][x].color != self.color:

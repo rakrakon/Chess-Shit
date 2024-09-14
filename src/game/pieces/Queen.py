@@ -6,7 +6,7 @@ from src.game.pieces.Rook import Rook
 
 
 class Queen(Piece):
-    def get_valid_moves(self, board, position: tuple[int, int]) -> List[tuple[int, int]]:
+    def get_valid_moves(self, board: List[List[Optional[Piece]]], position: tuple[int, int]) -> List[tuple[int, int]]:
         valid_moves: List[tuple[int, int]] = []
 
         rook = Rook(self.color)
