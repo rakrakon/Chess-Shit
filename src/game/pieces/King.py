@@ -4,7 +4,7 @@ from src.game.pieces.Piece import Piece
 
 
 class King(Piece):
-    def get_valid_moves(self, board, position: tuple[int, int]) -> List[tuple[int, int]]:
+    def get_valid_moves(self, board: List[List[Optional[Piece]]], position: tuple[int, int]) -> List[tuple[int, int]]:
         valid_moves: List[tuple[int, int]] = []
         x, y = position
         king_moves = [
