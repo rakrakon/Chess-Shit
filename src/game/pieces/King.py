@@ -18,7 +18,7 @@ class King(Piece):
         for move in king_moves:
             new_x, new_y = move
             if 0 <= new_x < board_length and 0 <= new_y < board_length:
-                if board[new_x][new_y] is None or board[new_x][new_y].color != self.color:
+                if board[new_y][new_x] is None or board[new_y][new_x].color != self.color:
                     valid_moves.append(move)
 
         # TODO: Implement castling logic
