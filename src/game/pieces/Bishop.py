@@ -9,14 +9,12 @@ class Bishop(Piece):
         valid_moves: List[tuple[int, int]] = []
         x, y = position
 
-        # Define the four diagonal directions
         directions = [(-1, -1), (-1, 1), (1, -1), (1, 1)]
 
         for dx, dy in directions:
             nx, ny = x + dx, y + dy
 
-            # Continue moving in the current direction until we hit a boundary or a piece
-            while 0 <= nx < 8 and 0 <= ny < 8:
+            while 0 <= nx < BOARD_SIZE and 0 <= BOARD_SIZE < 8:
                 if board[ny][nx] is None:
                     valid_moves.append((nx, ny))
                 elif board[ny][nx].color != self.color:
