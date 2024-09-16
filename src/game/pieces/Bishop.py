@@ -9,44 +9,23 @@ class Bishop(Piece):
         valid_moves: List[tuple[int, int]] = []
         x, y = position
 
-        # Up-left
-        for i, j in zip(range(x - 1, -1, -1), range(y - 1, -1, -1)):
-            if board[i][j] is None:
-                valid_moves.append((i, j))
-            elif board[i][j].color != self.color:
-                valid_moves.append((i, j))
-                break
-            else:
-                break
+        # Define the four diagonal directions
+        directions = [(-1, -1), (-1, 1), (1, -1), (1, 1)]
 
-        # Up-right
-        for i, j in zip(range(x - 1, -1, -1), range(y + 1, BOARD_SIZE)):
-            if board[i][j] is None:
-                valid_moves.append((i, j))
-            elif board[i][j].color != self.color:
-                valid_moves.append((i, j))
-                break
-            else:
-                break
+        for dx, dy in directions:
+            nx, ny = x + dx, y + dy
 
-        # Down-left
-        for i, j in zip(range(x + 1, BOARD_SIZE), range(y - 1, -1, -1)):
-            if board[i][j] is None:
-                valid_moves.append((i, j))
-            elif board[i][j].color != self.color:
-                valid_moves.append((i, j))
-                break
-            else:
-                break
+            # Continue moving in the current direction until we hit a boundary or a piece
+            while 0 <= nx < 8 and 0 <= ny < 8:
+                if board[ny][nx] is None:
+                    valid_moves.append((nx, ny))
+                elif board[ny][nx].color != self.color:
+                    valid_moves.append((nx, ny))
+                    break
+                else:
+                    break
 
-        # Down-right
-        for i, j in zip(range(x + 1, BOARD_SIZE), range(y + 1, BOARD_SIZE)):
-            if board[i][j] is None:
-                valid_moves.append((i, j))
-            elif board[i][j].color != self.color:
-                valid_moves.append((i, j))
-                break
-            else:
-                break
+                nx += dx
+                ny += dy
 
         return valid_moves
