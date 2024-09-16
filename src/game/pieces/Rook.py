@@ -21,7 +21,7 @@ class Rook(Piece):
                 break
 
         # Horizontal Left
-        for i in range(x - 1, BOARD_SIZE, -1):
+        for i in range(x - 1, 0, -1):
             if board[y][i] is None:
                 valid_moves.append((i, y))
             elif board[y][i].color != self.color:
@@ -41,7 +41,7 @@ class Rook(Piece):
                 break
 
         # Vertical Down
-        for i in range(y - 1, BOARD_SIZE, -1):
+        for i in range(y - 1, 0, -1):
             if board[i][x] is None:
                 valid_moves.append((x, i))
             elif board[i][x].color != self.color:
