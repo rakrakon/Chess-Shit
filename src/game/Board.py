@@ -1,5 +1,6 @@
 from typing import Tuple, List, Optional, TypeAlias
 
+from src.game.Aliases import TBoard
 from src.game.Constants import BOARD_SIZE
 from src.game.Color import Color
 from src.game.pieces.Bishop import Bishop
@@ -9,8 +10,6 @@ from src.game.pieces.Pawn import Pawn
 from src.game.pieces.Piece import Piece
 from src.game.pieces.Queen import Queen
 from src.game.pieces.Rook import Rook
-
-TBoard: TypeAlias = List[List[Optional[Piece]]]
 
 
 class Board:

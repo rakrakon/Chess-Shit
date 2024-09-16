@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from src.game.Board import TBoard
+from src.game.Aliases import TBoard
 from src.game.pieces.Bishop import Bishop
 from src.game.pieces.Piece import Piece
 from src.game.pieces.Rook import Rook
