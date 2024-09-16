@@ -4,6 +4,8 @@ from src.game.Color import Color
 
 
 class Piece:
+    has_moved = False
+
     def __init__(self, color: Color):
         self.color = color
 

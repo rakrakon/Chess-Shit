@@ -1,11 +1,12 @@
 from typing import List, Optional
 
+from src.game.Board import TBoard
 from src.game.Constants import BOARD_SIZE
 from src.game.pieces.Piece import Piece
 
 
 class Rook(Piece):
-    def get_valid_moves(self, board: List[List[Optional[Piece]]], position: tuple[int, int]) -> List[tuple[int, int]]:
+    def get_valid_moves(self, board: TBoard, position: tuple[int, int]) -> List[tuple[int, int]]:
         valid_moves: List[tuple[int, int]] = []
 
         x, y = position

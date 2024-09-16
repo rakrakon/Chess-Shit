@@ -1,4 +1,4 @@
-from typing import Tuple, List, Optional
+from typing import Tuple, List, Optional, TypeAlias
 
 from src.game.Constants import BOARD_SIZE
 from src.game.Color import Color
@@ -10,10 +10,13 @@ from src.game.pieces.Piece import Piece
 from src.game.pieces.Queen import Queen
 from src.game.pieces.Rook import Rook
 
+TBoard: TypeAlias = List[List[Optional[Piece]]]
+
 
 class Board:
+
     def __init__(self):
-        self.board: List[List[Optional[Piece]]] = create_initial_board()
+        self.board: TBoard = create_initial_board()
 
     def print_board(self):
         for row in self.board:
@@ -41,6 +44,8 @@ class Board:
         if (to_col, to_row) not in valid_moves:
             return False
 
+        piece.has_moved = True
+
         self.board[to_row][to_col] = piece
         self.board[from_row][from_col] = None
 
@@ -65,7 +70,7 @@ def is_valid_position(row: int, col: int) -> bool:
     return 0 <= row < BOARD_SIZE and 0 <= col < BOARD_SIZE
 
 
-def create_initial_board() -> List[List[Optional[Piece]]]:
+def create_initial_board() -> TBoard:
     board = [[None for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)]
 
     setup_pieces(board)
