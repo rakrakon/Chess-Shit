@@ -15,7 +15,7 @@ class Bishop(Piece):
         for dx, dy in directions:
             nx, ny = x + dx, y + dy
 
-            while 0 <= nx < BOARD_SIZE and 0 <= BOARD_SIZE < 8:
+            while 0 <= nx < BOARD_SIZE and 0 <= ny < BOARD_SIZE:
                 if board[ny][nx] is None:
                     valid_moves.append((nx, ny))
                 elif board[ny][nx].color != self.color:
