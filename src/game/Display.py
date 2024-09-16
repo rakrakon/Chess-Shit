@@ -47,7 +47,7 @@ class ChessGame:
                 color = BOARD_WHITE if (row + col) % 2 == 0 else BOARD_GREEN
                 pygame.draw.rect(screen, color, (col * SQUARE_SIZE, row * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
 
-                piece = self.board.get_piece(row, col)
+                piece = self.board.get_piece((row, col))
                 if piece:
                     self.draw_piece(piece, col * SQUARE_SIZE, row * SQUARE_SIZE)
 
@@ -72,7 +72,7 @@ class ChessGame:
             self.board.move_piece(self.selected_piece, (row, col))
             self.selected_piece = None
         else:
-            if self.board.get_piece(row, col):
+            if self.board.get_piece((row, col)):
                 self.selected_piece = (row, col)
 
     def run(self):
