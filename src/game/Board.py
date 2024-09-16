@@ -1,5 +1,6 @@
-from typing import Tuple, List, Optional
+from typing import Tuple, List, Optional, TypeAlias
 
+from src.game.Aliases import TBoard
 from src.game.Constants import BOARD_SIZE
 from src.game.Color import Color
 from src.game.pieces.Bishop import Bishop
@@ -12,8 +13,9 @@ from src.game.pieces.Rook import Rook
 
 
 class Board:
+
     def __init__(self):
-        self.board: List[List[Optional[Piece]]] = create_initial_board()
+        self.board: TBoard = create_initial_board()
 
     def print_board(self):
         for row in self.board:
@@ -41,19 +43,22 @@ class Board:
         if (to_col, to_row) not in valid_moves:
             return False
 
-        self.board[to_row][to_col] = piece
-        self.board[from_row][from_col] = None
+        piece.move(self, from_pos, to_pos)
 
         return True
 
-    def get_piece(self, row: int, col: int) -> Piece:
+    def get_piece(self, position: Tuple[int, int]) -> Optional[Piece]:
+        row, col = position
         if not is_valid_position(row, col):
             raise ValueError("Invalid position")
         return self.board[row][col]
 
-    def get_valid_moves(self, position: Tuple[int, int]) -> List[Tuple[int, int]]:
+    def set_piece(self, position: Tuple[int, int], piece: Optional[Piece]) -> None:
         row, col = position
-        piece = self.get_piece(row, col)
+        self.board[row][col] = piece
+
+    def get_valid_moves(self, position: Tuple[int, int]) -> List[Tuple[int, int]]:
+        piece = self.get_piece(position)
 
         if piece is None:
             return []
@@ -65,7 +70,7 @@ def is_valid_position(row: int, col: int) -> bool:
     return 0 <= row < BOARD_SIZE and 0 <= col < BOARD_SIZE
 
 
-def create_initial_board() -> List[List[Optional[Piece]]]:
+def create_initial_board() -> TBoard:
     board = [[None for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)]
 
     setup_pieces(board)
@@ -75,10 +80,10 @@ def create_initial_board() -> List[List[Optional[Piece]]]:
 
 def setup_pieces(board):
     for i in range(BOARD_SIZE):
-        board[1][i] = Pawn(Color.BLACK)
-        board[6][i] = Pawn(Color.WHITE)
+        board[Color.BLACK.starting_row][i] = Pawn(Color.BLACK)
+        board[Color.WHITE.starting_row][i] = Pawn(Color.WHITE)
 
     piece_order = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]
     for i, piece in enumerate(piece_order):
-        board[0][i] = piece(Color.BLACK)
-        board[7][i] = piece(Color.WHITE)
+        board[Color.WHITE.opposite_row][i] = piece(Color.BLACK)
+        board[Color.BLACK.opposite_row][i] = piece(Color.WHITE)
