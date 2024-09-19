@@ -53,9 +53,12 @@ class Board:
             raise ValueError("Invalid position")
         return self.board[row][col]
 
-    def set_piece(self, position: Tuple[int, int], piece: Optional[Piece]) -> None:
+    def set_piece(self, position: Tuple[int, int], piece: Optional[Piece]):
         row, col = position
         self.board[row][col] = piece
+
+    def remove_piece(self, position: Tuple[int, int]):
+        self.set_piece(position, None)
 
     def get_valid_moves(self, position: Tuple[int, int]) -> List[Tuple[int, int]]:
         piece = self.get_piece(position)
@@ -65,6 +68,27 @@ class Board:
 
         return piece.get_valid_moves(self.board, position)
 
+    def promote_pawn(self, pos, piece_name):
+        pawn = self.get_piece(pos)
+        new_piece = None
+
+        new_piece = None
+        print(f"Piece Name is: {piece_name}")
+        if piece_name == '♛':
+            from src.game.pieces.Queen import Queen
+            new_piece = Queen(pawn.color)
+        elif piece_name == '♜':
+            from src.game.pieces.Rook import Rook
+            new_piece = Rook(pawn.color)
+        elif piece_name == '♝':
+            from src.game.pieces.Bishop import Bishop
+            new_piece = Bishop(pawn.color)
+        elif piece_name == '♞':
+            from src.game.pieces.Knight import Knight
+            new_piece = Knight(pawn.color)
+
+        self.remove_piece(pos)
+        self.set_piece(pos, new_piece)
 
 def is_valid_position(row: int, col: int) -> bool:
     return 0 <= row < BOARD_SIZE and 0 <= col < BOARD_SIZE

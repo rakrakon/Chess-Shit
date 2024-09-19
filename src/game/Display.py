@@ -26,7 +26,7 @@ class ChessGame:
             'King': '♚'
         }
         self.promotion_menu_active = False
-        self.promotion_menu_pose = (0,0)
+        self.promotion_pawn_pose = (0,0)
 
     def draw_piece(self, piece, x, y):
         piece_type = type(piece).__name__
@@ -70,15 +70,20 @@ class ChessGame:
                 4
             )
 
-    def draw_promotion_menu(self, position):
+    def draw_promotion_menu(self):
         pieces = ["♛", "♜", "♝", "♞"]
 
         spacing = 55
         total_height = len(pieces) * spacing
         total_width = 40
 
-        start_x = (WIDTH - total_width) // 2
-        start_y = (HEIGHT - total_height) // 2
+        row, col = self.promotion_pawn_pose
+
+        start_x = col * SQUARE_SIZE
+        start_y = row * SQUARE_SIZE
+
+        if start_y + total_height > HEIGHT:
+            start_y = HEIGHT - total_height
 
         pygame.draw.rect(screen, WHITE, (start_x, start_y, total_width, total_height))
 
@@ -92,6 +97,15 @@ class ChessGame:
         return piece_rects
 
     def handle_click(self, pos):
+        if self.promotion_menu_active:
+            piece_rects = self.draw_promotion_menu()
+            for piece_name, rect in piece_rects:
+                if rect.collidepoint(pos):
+                    self.board.promote_pawn(self.promotion_pawn_pose, piece_name)
+                    self.promotion_menu_active = False
+                    self.promotion_pawn_pose = None
+                    return
+
         col = pos[0] // SQUARE_SIZE
         row = pos[1] // SQUARE_SIZE
 
@@ -100,9 +114,8 @@ class ChessGame:
             piece = self.board.get_piece((row, col))
             if type(piece) == Pawn and piece.color.opposite_row == row:
                 self.promotion_menu_active = True
-                self.promotion_menu_pose = row * WIDTH / BOARD_SIZE, col * HEIGHT / BOARD_SIZE
+                self.promotion_pawn_pose = (row, col)
             self.selected_piece = None
-
         else:
             if self.board.get_piece((row, col)):
                 self.selected_piece = (row, col)
