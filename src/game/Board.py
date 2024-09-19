@@ -3,6 +3,7 @@ from typing import Tuple, List, Optional, TypeAlias
 from src.game.Aliases import TBoard
 from src.game.Constants import BOARD_SIZE
 from src.game.Color import Color
+from src.game.TurnManager import TurnManager
 from src.game.pieces.Bishop import Bishop
 from src.game.pieces.King import King
 from src.game.pieces.Knight import Knight
@@ -34,6 +35,11 @@ class Board:
 
         piece = self.board[from_row][from_col]
 
+        piece_color = piece.color
+
+        if piece_color != TurnManager().get_current_turn():
+            return False
+
         if piece is None:
             raise ValueError("No piece at the source position")
 
@@ -44,6 +50,8 @@ class Board:
             return False
 
         piece.move(self, from_pos, to_pos)
+
+        TurnManager().next_turn()
 
         return True
 
