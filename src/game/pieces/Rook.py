@@ -2,11 +2,17 @@ from typing import List, Optional
 
 from src.game.Aliases import TBoard
 from src.game.Constants import BOARD_SIZE
+from src.game.pieces.King import King
 from src.game.pieces.Piece import Piece
 
 
 class Rook(Piece):
+    def update_is_checking(self, piece):
+        if isinstance(piece, King):
+            self.is_checking = True
+
     def get_valid_moves(self, board: TBoard, position: tuple[int, int]) -> List[tuple[int, int]]:
+        self.is_checking = False
         valid_moves: List[tuple[int, int]] = []
 
         x, y = position
@@ -16,6 +22,7 @@ class Rook(Piece):
             if board[y][i] is None:
                 valid_moves.append((i, y))
             elif board[y][i].color != self.color:
+                self.update_is_checking(board[y][i])
                 valid_moves.append((i, y))
                 break
             else:
@@ -26,6 +33,7 @@ class Rook(Piece):
             if board[y][i] is None:
                 valid_moves.append((i, y))
             elif board[y][i].color != self.color:
+                self.update_is_checking(board[y][i])
                 valid_moves.append((i, y))
                 break
             else:
@@ -36,6 +44,7 @@ class Rook(Piece):
             if board[i][x] is None:
                 valid_moves.append((x, i))
             elif board[i][x].color != self.color:
+                self.update_is_checking(board[i][x])
                 valid_moves.append((x, i))
                 break
             else:
@@ -46,6 +55,7 @@ class Rook(Piece):
             if board[i][x] is None:
                 valid_moves.append((x, i))
             elif board[i][x].color != self.color:
+                self.update_is_checking(board[i][x])
                 valid_moves.append((x, i))
                 break
             else:

@@ -10,6 +10,7 @@ class Piece:
     def __init__(self, color: Color):
         self.color = color
         self.has_moved = False
+        self.is_checking = False
 
     def get_valid_moves(self, board, position: tuple[int, int]) -> List[tuple[int, int]]:
         pass

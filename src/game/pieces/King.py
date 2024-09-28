@@ -1,5 +1,6 @@
 from typing import List, Tuple
 from src.game.Aliases import TBoard
+from src.game.Constants import BOARD_SIZE
 from src.game.pieces.Piece import Piece
 
 
@@ -9,6 +10,15 @@ def is_clear_path(board: TBoard, start, end, y):
         if board[y][x] is not None:
             return False
     return True
+
+
+def get_king_moves(position):
+    x, y = position
+    return [
+        (x - 1, y - 1), (x - 1, y), (x - 1, y + 1),
+        (x, y - 1), (x, y + 1),
+        (x + 1, y - 1), (x + 1, y), (x + 1, y + 1)
+    ]
 
 
 class King(Piece):
@@ -31,22 +41,27 @@ class King(Piece):
         super().move(board, from_pos, to_pos)
 
     def get_basic_moves(self, board: TBoard, position: Tuple[int, int]) -> List[Tuple[int, int]]:
-        x, y = position
-        king_moves = [
-            (x - 1, y - 1), (x - 1, y), (x - 1, y + 1),
-            (x, y - 1), (x, y + 1),
-            (x + 1, y - 1), (x + 1, y), (x + 1, y + 1)
-        ]
+        king_moves = get_king_moves(position)
 
         return [
             move for move in king_moves
-            if self.is_valid_move(board, move)
+            if self.is_valid_move(board, move) and not self.is_enemy_king_present(move, board)
         ]
+
+    def is_enemy_king_present(self, position, board):
+        moves = get_king_moves(position)
+        for move in moves:
+            nx, ny = move
+            if 0 <= nx < BOARD_SIZE and 0 <= ny < BOARD_SIZE:
+                piece = board[ny][nx]
+                if isinstance(piece, King) and piece.color != self.color:
+                    return True
+        return False
+
 
     def is_valid_move(self, board: TBoard, move: Tuple[int, int]) -> bool:
         new_x, new_y = move
-        board_length = len(board)
-        if 0 <= new_x < board_length and 0 <= new_y < board_length:
+        if 0 <= new_x < BOARD_SIZE and 0 <= new_y < BOARD_SIZE:
             return board[new_y][new_x] is None or board[new_y][new_x].color != self.color
         return False
 

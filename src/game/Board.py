@@ -17,6 +17,7 @@ class Board:
 
     def __init__(self):
         self.board: TBoard = create_initial_board()
+        self.is_checking = False
 
     def print_board(self):
         for row in self.board:
@@ -49,7 +50,16 @@ class Board:
         if (to_col, to_row) not in valid_moves:
             return False
 
+        if self.is_checking:
+            if not self.is_valid_defense_move(from_pos, to_pos, piece):
+                return False
+
         piece.move(self, from_pos, to_pos)
+
+        piece.get_valid_moves(self.board, (to_col, to_row))
+
+        if piece.is_checking:
+            self.is_checking = True
 
         TurnManager().next_turn()
 
@@ -76,10 +86,26 @@ class Board:
 
         return piece.get_valid_moves(self.board, position)
 
+    def update_checks(self):
+        for y in range(BOARD_SIZE):
+            for x in range(BOARD_SIZE):
+                piece = self.get_piece((y, x))
+                if piece is not None:
+                    piece.get_valid_moves(self.board, (x, y))
+                    if piece.is_checking:
+                        return
+        self.is_checking = False
+
+    def is_valid_defense_move(self, from_pos, to_pos, piece):
+        piece.move(self, from_pos, to_pos)
+        self.update_checks()
+        if self.is_checking:
+            piece.move(self, to_pos, from_pos)
+            return False
+        return True
+
     def promote_pawn(self, pos, piece_name):
         pawn = self.get_piece(pos)
-        new_piece = None
-
         new_piece = None
         print(f"Piece Name is: {piece_name}")
         if piece_name == '♛':
@@ -97,6 +123,7 @@ class Board:
 
         self.remove_piece(pos)
         self.set_piece(pos, new_piece)
+
 
 def is_valid_position(row: int, col: int) -> bool:
     return 0 <= row < BOARD_SIZE and 0 <= col < BOARD_SIZE

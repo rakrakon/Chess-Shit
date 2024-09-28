@@ -4,26 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdd4324c-0802-46f7-8f83-ac8d00d21df1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/chess.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/Board.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/Color.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/Constants.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/Display.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/Main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/pieces/Bishop.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/pieces/King.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/pieces/Knight.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/pieces/Pawn.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/pieces/Piece.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/pieces/Queen.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/pieces/Rook.py" afterDir="false" />
+    <list default="true" id="bdd4324c-0802-46f7-8f83-ac8d00d21df1" name="Changes" comment="Castle is now working i guess">
+      <change beforePath="$PROJECT_DIR$/.idea/chess.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/chess.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Board.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Board.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/TurnManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/TurnManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/pieces/Bishop.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/pieces/Bishop.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/pieces/King.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/pieces/King.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/pieces/Knight.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/pieces/Knight.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/pieces/Pawn.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/pieces/Pawn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/pieces/Piece.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/pieces/Piece.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/pieces/Queen.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/pieces/Queen.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/pieces/Rook.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/pieces/Rook.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +31,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="dev" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
@@ -49,25 +47,48 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.Display.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Run.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/rakra/PycharmProjects/chess/src/game/Main.py&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Language Defaults&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.Display.executor": "Run",
+    "Python.Main.executor": "Run",
+    "Python.Run.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "feature/check-mate",
+    "last_opened_file_path": "C:/Users/rakra/PycharmProjects/chess",
+    "settings.editor.selected.configurable": "advanced.settings"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\rakra\PycharmProjects\chess\test\test2" />
       <recent name="C:\Users\rakra\PycharmProjects\chess\src\game" />
       <recent name="C:\Users\rakra\PycharmProjects\chess\src" />
       <recent name="C:\Users\rakra\PycharmProjects\chess" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.Display">
+    <configuration name="Display" type="PythonConfigurationType" factoryName="Python">
+      <module name="chess" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/game/Display.py" />
+      <option name="PARAMETERS" value="memory_profiler" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="Run" type="PythonConfigurationType" factoryName="Python">
       <module name="chess" />
       <option name="ENV_FILES" value="" />
@@ -77,7 +98,6 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="SDK_NAME" value="Python 3.10 (chess)" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -91,11 +111,15 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Python.Display" />
+      <item itemvalue="Python.Run" />
+    </list>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-48aec45f0201-746f403e7f0c-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.17011.127" />
+        <option value="bundled-python-sdk-0e3be3396995-c546a90a8094-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-242.23339.19" />
       </set>
     </attachedChunks>
   </component>
@@ -108,6 +132,82 @@
       <option name="presentableId" value="Default" />
       <updated>1725126226144</updated>
     </task>
+    <task id="LOCAL-00001" summary="Fix Knight class">
+      <option name="closed" value="true" />
+      <created>1726423473045</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1726423473045</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Fix Rook class">
+      <option name="closed" value="true" />
+      <created>1726423651188</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1726423651188</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Fix Bishop class">
+      <option name="closed" value="true" />
+      <created>1726507172818</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1726507172818</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Fix Type Aliases">
+      <option name="closed" value="true" />
+      <created>1726507203069</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1726507203069</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Castle is now working i guess">
+      <option name="closed" value="true" />
+      <created>1726509909963</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1726509909963</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Fix Knight class" />
+    <MESSAGE value="Fix Rook class" />
+    <MESSAGE value="Fix Bishop class" />
+    <MESSAGE value="Fix Type Aliases" />
+    <MESSAGE value="Castle is now working i guess" />
+    <option name="LAST_COMMIT_MESSAGE" value="Castle is now working i guess" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/game/Board.py</url>
+          <line>95</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/game/pieces/King.py</url>
+          <line>55</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
