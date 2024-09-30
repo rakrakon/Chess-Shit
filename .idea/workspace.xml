@@ -4,19 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdd4324c-0802-46f7-8f83-ac8d00d21df1" name="Changes" comment="Castle is now working i guess">
-      <change beforePath="$PROJECT_DIR$/.idea/chess.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/chess.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="bdd4324c-0802-46f7-8f83-ac8d00d21df1" name="Changes" comment="Add checks">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Board.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Board.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/TurnManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/TurnManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/pieces/Bishop.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/pieces/Bishop.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/pieces/King.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/pieces/King.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/pieces/Knight.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/pieces/Knight.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/pieces/Pawn.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/pieces/Pawn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/pieces/Piece.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/pieces/Piece.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/pieces/Queen.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/pieces/Queen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/pieces/Rook.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/pieces/Rook.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +28,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;rakrakon&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/rakrakon/Chess-Shit.git&quot;,
+    &quot;accountId&quot;: &quot;43723288-8e9a-44cd-9ec3-f94ffb4ea6c4&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -47,17 +49,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.Display.executor": "Run",
-    "Python.Main.executor": "Run",
-    "Python.Run.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "feature/check-mate",
-    "last_opened_file_path": "C:/Users/rakra/PycharmProjects/chess",
-    "settings.editor.selected.configurable": "advanced.settings"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.Display.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Run.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/check-mate&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/rakra/PycharmProjects/chess&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\rakra\PycharmProjects\chess\test\test2" />
@@ -172,7 +174,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726509909963</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Add checks">
+      <option name="closed" value="true" />
+      <created>1727559032222</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1727559032222</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -192,22 +202,7 @@
     <MESSAGE value="Fix Bishop class" />
     <MESSAGE value="Fix Type Aliases" />
     <MESSAGE value="Castle is now working i guess" />
-    <option name="LAST_COMMIT_MESSAGE" value="Castle is now working i guess" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/game/Board.py</url>
-          <line>95</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/game/pieces/King.py</url>
-          <line>55</line>
-          <option name="timeStamp" value="17" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Add checks" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add checks" />
   </component>
 </project>

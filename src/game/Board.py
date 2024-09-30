@@ -5,7 +5,7 @@ from src.game.Constants import BOARD_SIZE
 from src.game.Color import Color
 from src.game.TurnManager import TurnManager
 from src.game.pieces.Bishop import Bishop
-from src.game.pieces.King import King
+from src.game.pieces.King import King, get_king_moves
 from src.game.pieces.Knight import Knight
 from src.game.pieces.Pawn import Pawn
 from src.game.pieces.Piece import Piece
@@ -18,6 +18,8 @@ class Board:
     def __init__(self):
         self.board: TBoard = create_initial_board()
         self.is_checking = False
+        self.has_ended = False
+        self.winner: Optional[Color] = None
 
     def print_board(self):
         for row in self.board:
@@ -63,7 +65,20 @@ class Board:
 
         TurnManager().next_turn()
 
+        next_turn_color = TurnManager().get_current_turn()
+
+        # Draw
+        if not self.get_all_valid_moves(next_turn_color):
+            self.has_ended = True
+
+        if self.is_checking and self.is_checkmate(next_turn_color):
+            self.has_ended = True
+            self.winner = piece.color
+
         return True
+
+    def get_winner(self):
+        return self.winner
 
     def get_piece(self, position: Tuple[int, int]) -> Optional[Piece]:
         row, col = position
@@ -97,12 +112,39 @@ class Board:
         self.is_checking = False
 
     def is_valid_defense_move(self, from_pos, to_pos, piece):
+        to_pos_piece = self.get_piece(to_pos)
         piece.move(self, from_pos, to_pos)
         self.update_checks()
-        if self.is_checking:
-            piece.move(self, to_pos, from_pos)
-            return False
+        is_valid = not self.is_checking
+        piece.move(self, to_pos, from_pos)
+        self.set_piece(to_pos, to_pos_piece)
+        return is_valid
+
+    def is_checkmate(self, color) -> bool:
+        all_moves = self.get_all_valid_moves(color)
+        for piece in all_moves:
+            from_to = (piece[0][1], piece[0][0])
+            for valid_move in piece[1]:
+                valid_move = (valid_move[1], valid_move[0])
+                if self.is_valid_defense_move(from_to, valid_move, self.get_piece(from_to)):
+                    return False
         return True
+
+    # Color of the next turn - Example: If white checkmates black, Color black will be passed
+    def get_all_valid_moves(self, color: Color) -> List[Tuple[Tuple[int, int], List[Tuple[int, int]]]]:
+        all_moves = []
+        for row in range(BOARD_SIZE):
+            for col in range(BOARD_SIZE):
+                position = (row, col)
+                piece = self.get_piece(position)
+
+                if not isinstance(piece, Piece) or piece.color != color:
+                    continue
+
+                piece_moves = piece.get_valid_moves(self.board, (col, row))
+                if piece_moves:
+                    all_moves.append(((col, row), piece_moves)) # Position tuple is in (x,y) piece moves is (x,y)
+        return all_moves
 
     def promote_pawn(self, pos, piece_name):
         pawn = self.get_piece(pos)
