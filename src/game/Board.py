@@ -20,6 +20,7 @@ class Board:
         self.is_checking = False
         self.has_ended = False
         self.winner: Optional[Color] = None
+        TurnManager().reset()
 
     def print_board(self):
         for row in self.board:

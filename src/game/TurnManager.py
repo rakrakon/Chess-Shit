@@ -14,6 +14,9 @@ class TurnManager:
         if not hasattr(self, 'current_turn'):
             self.current_turn = Color.WHITE
 
+    def reset(self):
+        self.current_turn = Color.WHITE
+
     def get_current_turn(self):
         return self.current_turn
 
