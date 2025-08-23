@@ -2,11 +2,13 @@ from typing import List, Optional
 
 from src.game.Aliases import TBoard
 from src.game.Constants import BOARD_SIZE
+from src.game.pieces.King import King
 from src.game.pieces.Piece import Piece
 
 
 class Bishop(Piece):
     def get_valid_moves(self, board: TBoard, position: tuple[int, int]) -> List[tuple[int, int]]:
+        self.is_checking = False
         valid_moves: List[tuple[int, int]] = []
         x, y = position
 
@@ -19,6 +21,8 @@ class Bishop(Piece):
                 if board[ny][nx] is None:
                     valid_moves.append((nx, ny))
                 elif board[ny][nx].color != self.color:
+                    if isinstance(board[ny][nx], King):
+                        self.is_checking = True
                     valid_moves.append((nx, ny))
                     break
                 else:
