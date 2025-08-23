@@ -22,6 +22,9 @@ class Board:
         self.winner: Optional[Color] = None
         TurnManager().reset()
 
+    def get_current_turn(self) -> Color:
+        return TurnManager().get_current_turn()
+
     def print_board(self):
         for row in self.board:
             print(" | ".join([str(piece) if piece else " " for piece in row]))
@@ -151,16 +154,16 @@ class Board:
         pawn = self.get_piece(pos)
         new_piece = None
         print(f"Piece Name is: {piece_name}")
-        if piece_name == '♛':
+        if piece_name == '♛' or piece_name == "Q":
             from src.game.pieces.Queen import Queen
             new_piece = Queen(pawn.color)
-        elif piece_name == '♜':
+        elif piece_name == '♜' or piece_name == "R":
             from src.game.pieces.Rook import Rook
             new_piece = Rook(pawn.color)
-        elif piece_name == '♝':
+        elif piece_name == '♝' or piece_name == "B":
             from src.game.pieces.Bishop import Bishop
             new_piece = Bishop(pawn.color)
-        elif piece_name == '♞':
+        elif piece_name == '♞' or piece_name == "H":
             from src.game.pieces.Knight import Knight
             new_piece = Knight(pawn.color)
 
