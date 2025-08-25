@@ -78,4 +78,5 @@ class King(Piece):
         return castling_moves
 
     def check_rook_movement(self, board: TBoard, rook_file: int) -> bool:
-        return not board[self.color.starting_row - self.color.direction][rook_file].has_moved
+        rook_location = board[self.color.starting_row - self.color.direction][rook_file]
+        return rook_location.__str__ == "Rook" and not rook_location.has_moved

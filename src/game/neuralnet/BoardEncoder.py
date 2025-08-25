@@ -22,7 +22,7 @@ def encode_board(board):
     planes = np.zeros((8, 8, 13), dtype=np.float32)
     for row in range(8):
         for col in range(8):
-            piece = board[row][col]
+            piece = board.get_piece((row, col))
             if piece is not None:
                 base_plane = PIECE_TO_PLANE[type(piece)]
                 if piece.color == Color.WHITE:

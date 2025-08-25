@@ -153,7 +153,6 @@ class Board:
     def promote_pawn(self, pos, piece_name):
         pawn = self.get_piece(pos)
         new_piece = None
-        print(f"Piece Name is: {piece_name}")
         if piece_name == '♛' or piece_name == "Q":
             from src.game.pieces.Queen import Queen
             new_piece = Queen(pawn.color)

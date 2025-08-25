@@ -1,7 +1,7 @@
 from src.game.Board import Board
-from BoardEncoder import encode_board
-from LegalMovesEncoder import board_legal_action_indices
-from ActionEncoder import decode_action
+from src.game.neuralnet.BoardEncoder import encode_board
+from src.game.neuralnet.LegalMovesEncoder import board_legal_action_indices
+from src.game.neuralnet.ActionEncoder import decode_action
 
 class ChessRL:
     def __init__(self):

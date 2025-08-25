@@ -24,7 +24,6 @@ class Knight(Piece):
                 if board[new_y][new_x] is None or board[new_y][new_x].color != self.color:
                     if isinstance(board[new_y][new_x], King):
                         self.is_checking = True
-                        print(f'y={new_y}, x={new_x}')
                     valid_moves.append(move)
 
         return valid_moves

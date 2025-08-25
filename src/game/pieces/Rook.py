@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List
 
 from src.game.Aliases import TBoard
 from src.game.Constants import BOARD_SIZE
