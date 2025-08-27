@@ -6,9 +6,8 @@ def train_step(model, optimizer, batch, device="cpu", policy_size=None):
     states, actions, outcomes = batch
     # Stack and move to device
     x = torch.from_numpy(
-        # states is a list of (C,8,8) numpy arrays
         np.stack(states, axis=0)
-    ).float().to(device)                              # (B,C,8,8)
+    ).float().permute(0, 3, 1, 2).to(device)                        # (B,C,8,8)
     a = torch.tensor(actions, dtype=torch.long, device=device)   # (B,)
     z = torch.tensor(outcomes, dtype=torch.float32, device=device).unsqueeze(1)  # (B,1)
 
