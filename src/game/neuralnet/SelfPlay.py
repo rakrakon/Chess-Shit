@@ -1,7 +1,10 @@
+import copy
+
 import torch
 from RLUtils import masked_softmax, sample_action
 from src.game.Color import Color
 
+# TODO: Fix pins
 
 @torch.no_grad()
 def play_one_game(env, model, device="cpu", temperature=1.0):
@@ -10,8 +13,11 @@ def play_one_game(env, model, device="cpu", temperature=1.0):
     player_sign: +1 if the stored state was from White-to-move, -1 if from Black-to-move.
     """
     traj = []
+    game = [env.board]
     state = env.reset() # shape (8, 8, 13)
     done = False
+    print("Started Game with Board:")
+    env.board.print_board()
 
     while not done:
         # Convert (H,W,C) -> (C,H,W)
@@ -24,10 +30,8 @@ def play_one_game(env, model, device="cpu", temperature=1.0):
         # Mask invalid moves
         valid_actions = env.get_valid_actions()  # list[int]
         probs = masked_softmax(policy_logits, valid_actions, temperature=temperature)
-
         # Sample an action
         action_idx = sample_action(probs)
-
         # Player sign (+1 for White, -1 for Black)
         current_player_is_white = env.board.get_current_turn() == Color.WHITE
         player_sign = 1.0 if current_player_is_white else -1.0
@@ -37,6 +41,7 @@ def play_one_game(env, model, device="cpu", temperature=1.0):
 
         # Apply move
         state, reward, done = env.step(action_idx)
+        game.append(copy.deepcopy(env.board))
 
     # Determine final outcome from White's perspective.
     winner = env.get_winner()  # should be "WHITE", "BLACK", or None
