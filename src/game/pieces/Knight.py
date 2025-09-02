@@ -1,8 +1,8 @@
-from typing import List, Optional
+from typing import List
 
 from src.game.Aliases import TBoard
 from src.game.pieces.King import King
-from src.game.pieces.Piece import Piece
+from src.game.pieces.Piece import Piece, adjust_for_checking
 
 
 class Knight(Piece):
@@ -26,4 +26,4 @@ class Knight(Piece):
                         self.is_checking = True
                     valid_moves.append(move)
 
-        return valid_moves
+        return adjust_for_checking(self.color, position, board, valid_moves)

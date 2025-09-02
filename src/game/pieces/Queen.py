@@ -1,10 +1,8 @@
 from typing import List, Optional
 
-from pygame.event import set_keyboard_grab
-
 from src.game.Aliases import TBoard
 from src.game.pieces.Bishop import Bishop
-from src.game.pieces.Piece import Piece
+from src.game.pieces.Piece import Piece, adjust_for_checking
 from src.game.pieces.Rook import Rook
 
 
@@ -21,4 +19,4 @@ class Queen(Piece):
 
         self.is_checking = rook.is_checking or bishop.is_checking
 
-        return valid_moves
+        return adjust_for_checking(self.color, position, board, valid_moves)

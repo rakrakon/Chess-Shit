@@ -1,11 +1,12 @@
-from typing import Tuple, List, Optional, TypeAlias
+from typing import Tuple, List, Optional
+
 
 from src.game.Aliases import TBoard
 from src.game.Constants import BOARD_SIZE
 from src.game.Color import Color
 from src.game.TurnManager import TurnManager
 from src.game.pieces.Bishop import Bishop
-from src.game.pieces.King import King, get_king_moves
+from src.game.pieces.King import King
 from src.game.pieces.Knight import Knight
 from src.game.pieces.Pawn import Pawn
 from src.game.pieces.Piece import Piece
@@ -72,7 +73,7 @@ class Board:
         next_turn_color = TurnManager().get_current_turn()
 
         # Draw
-        if not self.get_all_valid_moves(next_turn_color):
+        if not self.get_all_valid_moves(next_turn_color) or self.only_kings_left():
             self.has_ended = True
 
         if self.is_checking and self.is_checkmate(next_turn_color):
@@ -169,6 +170,16 @@ class Board:
         self.remove_piece(pos)
         self.set_piece(pos, new_piece)
 
+    def only_kings_left(self):
+        count = 0
+        for row in self.board:
+            for piece in row:
+                if piece is None:
+                    continue
+                if not isinstance(piece, King):
+                    return False
+                count += 1
+        return count == 2
 
 def is_valid_position(row: int, col: int) -> bool:
     return 0 <= row < BOARD_SIZE and 0 <= col < BOARD_SIZE
