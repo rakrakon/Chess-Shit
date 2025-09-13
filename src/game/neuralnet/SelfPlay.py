@@ -1,8 +1,11 @@
 import copy
+import time
 
 import torch
 from RLUtils import masked_softmax, sample_action
 from src.game.Color import Color
+from src.game.DebugUtils import debug_draw_board
+
 
 # TODO: Fix pins
 
@@ -41,6 +44,7 @@ def play_one_game(env, model, device="cpu", temperature=1.0):
 
         # Apply move
         state, reward, done = env.step(action_idx)
+        debug_draw_board(env.board)
         game.append(copy.deepcopy(env.board))
 
     # Determine final outcome from White's perspective.

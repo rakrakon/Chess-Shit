@@ -15,48 +15,48 @@ class Rook(Piece):
         self.is_checking = False
         valid_moves: List[tuple[int, int]] = []
 
-        x, y = position
+        row, col = position
 
-        # Horizontal Right
-        for i in range(x + 1, BOARD_SIZE):
-            if board[y][i] is None:
-                valid_moves.append((i, y))
-            elif board[y][i].color != self.color:
-                self.update_is_checking(board[y][i])
-                valid_moves.append((i, y))
-                break
-            else:
-                break
-
-        # Horizontal Left
-        for i in range(x - 1, 0, -1):
-            if board[y][i] is None:
-                valid_moves.append((i, y))
-            elif board[y][i].color != self.color:
-                self.update_is_checking(board[y][i])
-                valid_moves.append((i, y))
+        # Vertical Down
+        for r in range(row + 1, BOARD_SIZE):
+            if board[r][col] is None:
+                valid_moves.append((r, col))
+            elif board[r][col].color != self.color:
+                self.update_is_checking(board[r][col])
+                valid_moves.append((r, col))
                 break
             else:
                 break
 
         # Vertical Up
-        for i in range(y + 1, BOARD_SIZE):
-            if board[i][x] is None:
-                valid_moves.append((x, i))
-            elif board[i][x].color != self.color:
-                self.update_is_checking(board[i][x])
-                valid_moves.append((x, i))
+        for r in range(row - 1, -1, -1):
+            if board[r][col] is None:
+                valid_moves.append((r, col))
+            elif board[r][col].color != self.color:
+                self.update_is_checking(board[r][col])
+                valid_moves.append((r, col))
                 break
             else:
                 break
 
-        # Vertical Down
-        for i in range(y - 1, 0, -1):
-            if board[i][x] is None:
-                valid_moves.append((x, i))
-            elif board[i][x].color != self.color:
-                self.update_is_checking(board[i][x])
-                valid_moves.append((x, i))
+        # Horizontal Right
+        for c in range(col + 1, BOARD_SIZE):
+            if board[row][c] is None:
+                valid_moves.append((row, c))
+            elif board[row][c].color != self.color:
+                self.update_is_checking(board[row][c])
+                valid_moves.append((row, c))
+                break
+            else:
+                break
+
+        # Horizontal Left
+        for c in range(col - 1, -1, -1):
+            if board[row][c] is None:
+                valid_moves.append((row, c))
+            elif board[row][c].color != self.color:
+                self.update_is_checking(board[row][c])
+                valid_moves.append((row, c))
                 break
             else:
                 break

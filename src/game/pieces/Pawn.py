@@ -17,34 +17,36 @@ class Pawn(Piece):
         self.is_checking = False
         valid_moves: List[tuple[int, int]] = []
 
-        x, y = position
-        forward_step = y + self.color.direction
-        double_forward_step = y + self.color.direction * 2
+        row, col = position
+        forward_step = row + self.color.direction
+        double_forward_step = row + self.color.direction * 2
 
         if 0 <= forward_step < BOARD_SIZE:
-            if board[forward_step][x] is None:
-                self.update_is_checking(board[forward_step][x])
-                valid_moves.append((x, forward_step))
+            if board[forward_step][col] is None:
+                self.update_is_checking(board[forward_step][col])
+                valid_moves.append((forward_step, col))
 
-                if y == self.color.starting_row and board[double_forward_step][x] is None:
-                    self.update_is_checking(board[double_forward_step][x])
-                    valid_moves.append((x, double_forward_step))
+                if row == self.color.starting_row and board[double_forward_step][col] is None:
+                    self.update_is_checking(board[double_forward_step][col])
+                    valid_moves.append((double_forward_step, col))
 
-            if x + 1 < len(board[0]) and board[forward_step][x + 1] and board[forward_step][x + 1].color != self.color:
-                self.update_is_checking(board[forward_step][x + 1])
-                valid_moves.append((x + 1, forward_step))
+            if col + 1 < len(board[0]) and board[forward_step][col + 1] and board[forward_step][col + 1].color != self.color:
+                self.update_is_checking(board[forward_step][col + 1])
+                valid_moves.append((forward_step, col + 1))
 
-            if x - 1 >= 0 and board[forward_step][x - 1] and board[forward_step][x - 1].color != self.color:
-                self.update_is_checking(board[forward_step][x - 1])
-                valid_moves.append((x - 1, forward_step))
+            if col - 1 >= 0 and board[forward_step][col - 1] and board[forward_step][col - 1].color != self.color:
+                self.update_is_checking(board[forward_step][col - 1])
+                valid_moves.append((forward_step, col - 1))
 
-            if x != BOARD_SIZE - 1 and isinstance(board[y][x + 1], Pawn) and board[y][x + 1].has_two_stepped:
-                self.update_is_checking(board[y][x + 1])
-                valid_moves.append((x + 1, forward_step))
+            # Right side en passant
+            if col != BOARD_SIZE - 1 and isinstance(board[row][col + 1], Pawn) and board[row][col + 1].has_two_stepped:
+                self.update_is_checking(board[row][col + 1])
+                valid_moves.append((forward_step, col + 1))
 
-            if x != 0 and isinstance(board[y][x - 1], Pawn) and board[y][x - 1].has_two_stepped:
-                self.update_is_checking(board[y][x - 1])
-                valid_moves.append((x - 1, forward_step))
+            # Left side en passant
+            if col != 0 and isinstance(board[row][col - 1], Pawn) and board[row][col - 1].has_two_stepped:
+                self.update_is_checking(board[row][col - 1])
+                valid_moves.append((forward_step, col - 1))
 
         return adjust_for_checking(self.color, position, board, valid_moves)
 

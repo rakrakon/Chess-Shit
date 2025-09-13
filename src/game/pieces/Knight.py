@@ -9,21 +9,25 @@ class Knight(Piece):
     def get_valid_moves(self, board: TBoard, position: tuple[int, int]) -> List[tuple[int, int]]:
         self.is_checking = False
         valid_moves: List[tuple[int, int]] = []
-        x, y = position
+        row, col = position
         knight_moves = [
-            (x - 2, y - 1), (x - 2, y + 1),
-            (x - 1, y - 2), (x - 1, y + 2),
-            (x + 1, y - 2), (x + 1, y + 2),
-            (x + 2, y - 1), (x + 2, y + 1)
+            (row - 2, col - 1), (row - 2, col + 1),
+            (row - 1, col - 2), (row - 1, col + 2),
+            (row + 1, col - 2), (row + 1, col + 2),
+            (row + 2, col - 1), (row + 2, col + 1)
         ]
 
         for move in knight_moves:
-            new_x, new_y = move
+            new_row, new_col = move
             board_length = len(board)
-            if 0 <= new_x < board_length and 0 <= new_y < board_length:
-                if board[new_y][new_x] is None or board[new_y][new_x].color != self.color:
-                    if isinstance(board[new_y][new_x], King):
+            if 0 <= new_row < board_length and 0 <= new_col < board_length:
+                if board[new_row][new_col] is None or board[new_row][new_col].color != self.color:
+                    if isinstance(board[new_row][new_col], King):
                         self.is_checking = True
                     valid_moves.append(move)
 
         return adjust_for_checking(self.color, position, board, valid_moves)
+
+    def __str__(self):
+        return "KN"
+

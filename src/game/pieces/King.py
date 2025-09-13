@@ -4,20 +4,20 @@ from src.game.Constants import BOARD_SIZE
 from src.game.pieces.Piece import Piece
 
 
-def is_clear_path(board: TBoard, start, end, y):
-    step = 1 if start < end else -1
-    for x in range(start + step, end, step):
-        if board[y][x] is not None:
+def is_horizontal_path_clear(board: TBoard, row: int, start_col: int, end_col: int) -> bool:
+    step = 1 if start_col < end_col else -1
+    for col in range(start_col + step, end_col, step):
+        if board[row][col] is not None:
             return False
     return True
 
 
 def get_king_moves(position):
-    x, y = position
+    row, col = position
     return [
-        (x - 1, y - 1), (x - 1, y), (x - 1, y + 1),
-        (x, y - 1), (x, y + 1),
-        (x + 1, y - 1), (x + 1, y), (x + 1, y + 1)
+        (row - 1, col - 1), (row - 1, col), (row - 1, col + 1),
+        (row, col - 1), (row, col + 1),
+        (row + 1, col - 1), (row + 1, col), (row + 1, col + 1)
     ]
 
 
@@ -53,7 +53,7 @@ class King(Piece):
         for move in moves:
             nx, ny = move
             if 0 <= nx < BOARD_SIZE and 0 <= ny < BOARD_SIZE:
-                piece = board[ny][nx]
+                piece = board[nx][ny]
                 if isinstance(piece, King) and piece.color != self.color:
                     return True
         return False
@@ -67,27 +67,30 @@ class King(Piece):
 
                 if piece.__str__() == "P": # Pawn Piece
                     forward_row = row_idx + piece.color.direction
-                    grids += [(col_idx + 1, forward_row), (col_idx - 1, forward_row)]
+                    grids += [(forward_row, col_idx + 1), (forward_row, col_idx - 1)]
                     continue
 
-                grids += piece.get_valid_moves(board, (col_idx, row_idx))
+                grids += piece.get_valid_moves(board, (row_idx, col_idx))
         return grids
 
     def is_valid_move(self, board: TBoard, move: Tuple[int, int]) -> bool:
-        new_x, new_y = move
-        if 0 <= new_x < BOARD_SIZE and 0 <= new_y < BOARD_SIZE:
-            return board[new_x][new_y] is None or board[new_x][new_y].color != self.color
+        new_row, new_col = move
+        if 0 <= new_row < BOARD_SIZE and 0 <= new_col < BOARD_SIZE:
+            return board[new_row][new_col] is None or board[new_row][new_col].color != self.color
         return False
 
     def get_castling_moves(self, board: TBoard, position: Tuple[int, int]) -> List[Tuple[int, int]]:
         castling_moves = []
-        x, y = position
+        row, col = position
 
         if not self.has_moved:
-            if self.check_rook_movement(board, 7) and is_clear_path(board, x + 1, 7, y):  # Kingside
-                castling_moves.append((x + 2, y))
-            if self.check_rook_movement(board, 0) and is_clear_path(board, x - 1, 0, y):  # Queenside
-                castling_moves.append((x - 2, y))
+            # Kingside castling
+            if self.check_rook_movement(board, 7) and is_horizontal_path_clear(board, row, col + 1, 7):
+                castling_moves.append((row, col + 2))
+
+            # Queenside castling
+            if self.check_rook_movement(board, 0) and is_horizontal_path_clear(board, row, 1, col):
+                castling_moves.append((row, col - 2))
 
         return castling_moves
 

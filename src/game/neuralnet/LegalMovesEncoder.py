@@ -7,12 +7,12 @@ def board_legal_action_indices(board: Board) -> list[int]:
     action_indices = []
     all_moves = board.get_all_valid_moves(board.get_current_turn())  # {(from_col, from_row): [(to_col, to_row), ...]}
 
-    for (from_col, from_row), moves in all_moves:
+    for (from_row, from_col), moves in all_moves:
         piece = board.get_piece((from_row, from_col))  # Convert to (row, col) for board.get_piece
         if piece is None:
             continue
 
-        for to_col, to_row in moves:
+        for to_row, to_col in moves:
             from_pos = (from_row, from_col)  # (row, col)
             to_pos = (to_row, to_col)        # (row, col)
 

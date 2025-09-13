@@ -51,10 +51,10 @@ class Board:
         if piece is None:
             raise ValueError("No piece at the source position")
 
-        y, x = from_pos
-        valid_moves = piece.get_valid_moves(self.board, (x, y))
+        row, col = from_pos
+        valid_moves = piece.get_valid_moves(self.board, (row, col))
 
-        if (to_col, to_row) not in valid_moves:
+        if (to_row, to_col) not in valid_moves:
             return False
 
         if self.is_checking:
@@ -63,7 +63,7 @@ class Board:
 
         piece.move(self, from_pos, to_pos)
 
-        piece.get_valid_moves(self.board, (to_col, to_row))
+        piece.get_valid_moves(self.board, (to_row, to_col))
 
         if piece.is_checking:
             self.is_checking = True
@@ -107,11 +107,11 @@ class Board:
         return piece.get_valid_moves(self.board, position)
 
     def update_checks(self):
-        for y in range(BOARD_SIZE):
-            for x in range(BOARD_SIZE):
-                piece = self.get_piece((y, x))
+        for row in range(BOARD_SIZE):
+            for col in range(BOARD_SIZE):
+                piece = self.get_piece((row, col))
                 if piece is not None:
-                    piece.get_valid_moves(self.board, (x, y))
+                    piece.get_valid_moves(self.board, (col, row))
                     if piece.is_checking:
                         return
         self.is_checking = False
@@ -146,9 +146,9 @@ class Board:
                 if not isinstance(piece, Piece) or piece.color != color:
                     continue
 
-                piece_moves = piece.get_valid_moves(self.board, (col, row))
+                piece_moves = piece.get_valid_moves(self.board, (row, col))
                 if piece_moves:
-                    all_moves.append(((col, row), piece_moves)) # Position tuple is in (x,y) piece moves is (x,y)
+                    all_moves.append(((row, col), piece_moves)) # Position tuple is in (row , col) piece moves is (row, col)
         return all_moves
 
     def promote_pawn(self, pos, piece_name):

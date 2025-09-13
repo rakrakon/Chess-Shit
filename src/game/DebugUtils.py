@@ -5,6 +5,7 @@ from src.game.Board import Board
 from src.game.Color import Color
 from src.game.Constants import *
 from src.game.Display import ChessGame
+from src.game.neuralnet.ActionEncoder import decode_action, encode_move
 
 # Piece symbols
 piece_symbols = {
@@ -83,3 +84,13 @@ def debug_draw_board(board):
 def visualize_game():
     game = ChessGame()
     game.board.move_piece()
+
+if __name__ == '__main__':
+    # print(encode_move((6,5), (7,4)))
+    # print(decode_action(267))
+    # valid_moves = [((0, 4), [(0, 3)]), ((4, 4), [(4, 3)]), ((0, 5), [(1, 3), (1, 7), (2, 4)]), ((3, 5), [(3, 4)]), ((5, 5), [(5, 4)]), ((1, 6), [(1, 5)]), ((2, 6), [(2, 5), (2, 4)]), ((5, 6), [(4, 5), (4, 6), (4, 7), (5, 7)]), ((6, 6), [(6, 5), (6, 4)]), ((7, 6), [(7, 5), (7, 4)]), ((0, 7), [(1, 7), (0, 6)]), ((2, 7), [(3, 6), (4, 5), (5, 4), (6, 3), (7, 2)]), ((3, 7), [(4, 7), (3, 6), (4, 6)]), ((5, 7), [(4, 6)]), ((6, 7), [(4, 6), (7, 5)])]
+    # for from_pos, moves in valid_moves:
+    #     for move in moves:
+    #         move_id = encode_move(from_pos, move)
+    #         print(move_id)
+    pass
