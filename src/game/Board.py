@@ -70,13 +70,13 @@ class Board:
 
         next_turn_color = TurnManager().get_current_turn()
 
-        # Draw
-        if not self.get_all_valid_moves(next_turn_color) or self.only_kings_left():
-            self.has_ended = True
-
         if self.is_checking and self.is_checkmate(next_turn_color):
             self.has_ended = True
             self.winner = piece.color
+
+        # Draw
+        if not self.get_all_valid_moves(next_turn_color) or self.only_kings_left():
+            self.has_ended = True
 
         return True
 
