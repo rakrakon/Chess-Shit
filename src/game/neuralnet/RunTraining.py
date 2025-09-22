@@ -15,14 +15,21 @@ def main(device="cpu"):
     in_channels = 13
     policy_size = total_actions()
 
-    model = PolicyValueNet(in_channels, policy_size).to(device)
+    model = PolicyValueNet(
+        in_channels=in_channels,
+        policy_size=total_actions(),
+        hidden_channels=128,  # filters per conv
+        num_blocks=2,  # how many conv layers
+        head_channels=32  # channels in heads
+    ).to(device)
+
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3, weight_decay=1e-4)
     buffer = ReplayBuffer(capacity=100_000)
 
     num_iterations = 1000
     for iteration in range(num_iterations):
         # --- Self-play ---
-        traj, z_white = play_one_game(env, model, device=device, temperature=1.0)
+        traj, z_white = play_one_game(env, model, device=device, temperature=1.0, mcts_simulations=50)
 
         # Log game result
         num_moves = len(traj)
@@ -46,6 +53,7 @@ def main(device="cpu"):
                       f"top1={metrics['policy_top1_acc']:.2%}")
 
     print("Training completed!")
+
 
 if __name__ == "__main__":
     main(device="cuda" if torch.cuda.is_available() else "cpu")

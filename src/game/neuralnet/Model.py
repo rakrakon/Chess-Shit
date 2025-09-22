@@ -1,23 +1,38 @@
 import torch.nn as nn
 
+
 class PolicyValueNet(nn.Module):
-    def __init__(self, in_channels: int, policy_size: int):
+    def __init__(self, in_channels: int,
+                 policy_size: int,
+                 hidden_channels: int = 128,
+                 num_blocks: int = 2,
+                 head_channels: int = 32):
         super().__init__()
-        # Small, simple CNN trunk (start small; you can grow it later)
-        self.trunk = nn.Sequential(
-            nn.Conv2d(in_channels, 128, 3, padding=1), nn.ReLU(),
-            nn.Conv2d(128, 128, 3, padding=1), nn.ReLU(),
-        )
+
+        # Build trunk dynamically
+        layers = []
+        in_ch = in_channels
+        for i in range(num_blocks):
+            layers += [
+                nn.Conv2d(in_ch, hidden_channels, 3, padding=1),
+                nn.ReLU()
+            ]
+            in_ch = hidden_channels
+        self.trunk = nn.Sequential(*layers)
+
+        # Policy head
         self.policy_head = nn.Sequential(
-            nn.Conv2d(128, 32, 1), nn.ReLU(),
+            nn.Conv2d(hidden_channels, head_channels, 1), nn.ReLU(),
             nn.Flatten(),
-            nn.Linear(32 * 8 * 8, policy_size)
+            nn.Linear(head_channels * 8 * 8, policy_size)
         )
+
+        # Value head
         self.value_head = nn.Sequential(
-            nn.Conv2d(128, 32, 1), nn.ReLU(),
+            nn.Conv2d(hidden_channels, head_channels, 1), nn.ReLU(),
             nn.Flatten(),
-            nn.Linear(32 * 8 * 8, 128), nn.ReLU(),
-            nn.Linear(128, 1),
+            nn.Linear(head_channels * 8 * 8, hidden_channels), nn.ReLU(),
+            nn.Linear(hidden_channels, 1),
             nn.Tanh()  # outputs in [-1, 1]
         )
 
@@ -25,5 +40,5 @@ class PolicyValueNet(nn.Module):
         # x: (B, C, 8, 8)
         h = self.trunk(x)
         policy_logits = self.policy_head(h)  # (B, A)
-        value = self.value_head(h)           # (B, 1)
+        value = self.value_head(h)  # (B, 1)
         return policy_logits, value

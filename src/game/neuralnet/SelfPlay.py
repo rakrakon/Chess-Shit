@@ -3,13 +3,9 @@ import copy
 import torch
 from RLUtils import masked_softmax, sample_action
 from src.game.Color import Color
-from src.game.DebugUtils import debug_draw_board
-
-
-# TODO: Fix pins
 
 @torch.no_grad()
-def play_one_game(env, model, device="cpu", temperature=1.0):
+def play_one_game(env, model, device="cpu", temperature=1.0, max_moves=200, mcts_simulations=50):
     """
     Returns a list of (state_tensor, action_idx, player_sign) and the final outcome z in {-1,0,1} for White.
     player_sign: +1 if the stored state was from White-to-move, -1 if from Black-to-move.
@@ -18,10 +14,11 @@ def play_one_game(env, model, device="cpu", temperature=1.0):
     game = [env.board]
     state = env.reset() # shape (8, 8, 13)
     done = False
+    move_count = 0
     print("Started Game with Board:")
     env.board.print_board()
 
-    while not done:
+    while not done and move_count < max_moves:
         # Convert (H,W,C) -> (C,H,W)
         s = torch.from_numpy(state).float().permute(2, 0, 1).unsqueeze(0).to(device)  # (1, C, 8, 8)
 
@@ -43,6 +40,7 @@ def play_one_game(env, model, device="cpu", temperature=1.0):
 
         # Apply move
         state, reward, done = env.step(action_idx)
+        move_count += 1
         # debug_draw_board(env.board)
         # game.append(copy.deepcopy(env.board))
 
