@@ -2,7 +2,7 @@ from typing import List, Tuple
 
 from src.game.Aliases import TBoard
 from src.game.pieces.King import King
-from src.game.pieces.Piece import Piece, adjust_for_checking
+from src.game.pieces.Piece import Piece
 from src.game.Constants import BOARD_SIZE
 
 
@@ -48,7 +48,7 @@ class Pawn(Piece):
                 self.update_is_checking(board[row][col - 1])
                 valid_moves.append((forward_step, col - 1))
 
-        return adjust_for_checking(self.color, position, board, valid_moves)
+        return valid_moves
 
     def move(self, board: 'Board', from_pos: Tuple[int, int], to_pos: Tuple[int, int]) -> None:
         from_row, from_col = from_pos

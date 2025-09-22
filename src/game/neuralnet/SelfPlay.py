@@ -1,5 +1,4 @@
 import copy
-import time
 
 import torch
 from RLUtils import masked_softmax, sample_action
@@ -44,8 +43,8 @@ def play_one_game(env, model, device="cpu", temperature=1.0):
 
         # Apply move
         state, reward, done = env.step(action_idx)
-        debug_draw_board(env.board)
-        game.append(copy.deepcopy(env.board))
+        # debug_draw_board(env.board)
+        # game.append(copy.deepcopy(env.board))
 
     # Determine final outcome from White's perspective.
     winner = env.get_winner()  # should be "WHITE", "BLACK", or None

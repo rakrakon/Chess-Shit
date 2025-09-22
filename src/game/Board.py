@@ -19,6 +19,7 @@ class Board:
     def __init__(self):
         self.board: TBoard = create_initial_board()
         self.is_checking = False
+        self.color_of_checking_piece = None
         self.has_ended = False
         self.winner: Optional[Color] = None
         TurnManager().reset()
@@ -51,10 +52,12 @@ class Board:
         if piece is None:
             raise ValueError("No piece at the source position")
 
-        row, col = from_pos
-        valid_moves = piece.get_valid_moves(self.board, (row, col))
+        self.update_checks()
 
-        if (to_row, to_col) not in valid_moves:
+        all_moves = self.get_all_valid_moves(TurnManager().get_current_turn())
+        valid_destinations = [to_pos for from_pos, to_list in all_moves for to_pos in to_list]
+
+        if (to_row, to_col) not in valid_destinations:
             return False
 
         if self.is_checking:
@@ -62,11 +65,6 @@ class Board:
                 return False
 
         piece.move(self, from_pos, to_pos)
-
-        piece.get_valid_moves(self.board, (to_row, to_col))
-
-        if piece.is_checking:
-            self.is_checking = True
 
         TurnManager().next_turn()
 
@@ -107,14 +105,18 @@ class Board:
         return piece.get_valid_moves(self.board, position)
 
     def update_checks(self):
+        self.is_checking = False
+        self.color_of_checking_piece = None
+
         for row in range(BOARD_SIZE):
             for col in range(BOARD_SIZE):
                 piece = self.get_piece((row, col))
                 if piece is not None:
-                    piece.get_valid_moves(self.board, (col, row))
+                    piece.get_valid_moves(self.board, (row, col))
                     if piece.is_checking:
+                        self.is_checking = True
+                        self.color_of_checking_piece = piece.color
                         return
-        self.is_checking = False
 
     def is_valid_defense_move(self, from_pos, to_pos, piece):
         to_pos_piece = self.get_piece(to_pos)
@@ -136,19 +138,44 @@ class Board:
         return True
 
     # Color of the next turn - Example: If white checkmates black, Color black will be passed
-    def get_all_valid_moves(self, color: Color) -> List[Tuple[Tuple[int, int], List[Tuple[int, int]]]]:
+    def get_all_valid_moves(self, color: Color):
         all_moves = []
+        original_is_checking = self.is_checking
+        original_color_checking = self.color_of_checking_piece
+
         for row in range(BOARD_SIZE):
             for col in range(BOARD_SIZE):
-                position = (row, col)
-                piece = self.get_piece(position)
-
+                piece = self.get_piece((row, col))
                 if not isinstance(piece, Piece) or piece.color != color:
                     continue
 
                 piece_moves = piece.get_valid_moves(self.board, (row, col))
-                if piece_moves:
-                    all_moves.append(((row, col), piece_moves)) # Position tuple is in (row , col) piece moves is (row, col)
+                valid_moves = []
+
+                for target in piece_moves:
+                    # Save the state
+                    target_piece = self.board[target[0]][target[1]]
+
+                    # Make the move
+                    self.board[target[0]][target[1]] = piece
+                    self.board[row][col] = None
+
+                    # Check legality
+                    self.update_checks()
+                    if not self.is_checking or (self.is_checking and self.color_of_checking_piece == color) or self.color_of_checking_piece == color:
+                        valid_moves.append(target)
+
+                    # Undo the move
+                    self.board[row][col] = piece
+                    self.board[target[0]][target[1]] = target_piece
+
+                    # Restore checking state
+                    self.is_checking = original_is_checking
+                    self.color_of_checking_piece = original_color_checking
+
+                if valid_moves:
+                    all_moves.append(((row, col), valid_moves))
+
         return all_moves
 
     def promote_pawn(self, pos, piece_name):
@@ -163,7 +190,7 @@ class Board:
         elif piece_name == '♝' or piece_name == "B":
             from src.game.pieces.Bishop import Bishop
             new_piece = Bishop(pawn.color)
-        elif piece_name == '♞' or piece_name == "H":
+        elif piece_name == '♞' or piece_name == "KN":
             from src.game.pieces.Knight import Knight
             new_piece = Knight(pawn.color)
 

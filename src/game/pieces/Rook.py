@@ -3,7 +3,7 @@ from typing import List
 from src.game.Aliases import TBoard
 from src.game.Constants import BOARD_SIZE
 from src.game.pieces.King import King
-from src.game.pieces.Piece import Piece, adjust_for_checking
+from src.game.pieces.Piece import Piece
 
 
 class Rook(Piece):
@@ -61,4 +61,4 @@ class Rook(Piece):
             else:
                 break
 
-        return adjust_for_checking(self.color, position, board, valid_moves)
+        return valid_moves

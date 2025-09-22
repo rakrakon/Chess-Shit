@@ -38,6 +38,7 @@ class King(Piece):
             rook = board.get_piece((from_row, rook_from_col))
             rook.move(board, (from_row, rook_from_col), (to_row, rook_to_col))
 
+        self.has_moved = True
         super().move(board, from_pos, to_pos)
 
     def get_basic_moves(self, board: TBoard, position: Tuple[int, int]) -> List[Tuple[int, int]]:

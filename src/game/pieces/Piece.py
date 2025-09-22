@@ -1,30 +1,31 @@
 from typing import List, Tuple
 
-import copy
 from src.game.Color import Color
 from src.game.Constants import BOARD_SIZE
 
 
-def is_any_piece_checking_color(board, color):
-    for row in board:
-        for piece in row:
-            if piece is None:
-                continue
+# TODO: This doesn't fucking work, Remove this and adjust for checking inside get_all_valid moves.
 
-            if piece.color != color and piece.is_checking:
-                return True
-    return False
-
-
-def adjust_for_checking(color, position, board, valid_moves):
-    adjusted_valid_moves = []
-    for move in valid_moves:
-        testboard = copy.deepcopy(board)
-        testboard[move[0]][move[1]] = testboard[position[0]][position[1]]
-        testboard[position[0]][position[1]] = None
-        if not is_any_piece_checking_color(testboard, color):
-            adjusted_valid_moves.append(move)
-    return adjusted_valid_moves
+# def is_any_piece_checking_color(board, color):
+#     for row in board:
+#         for piece in row:
+#             if piece is None:
+#                 continue
+#
+#             if piece.color != color and piece.is_checking:
+#                 return True
+#     return False
+#
+#
+# def adjust_for_checking(color, position, board, valid_moves):
+#     adjusted_valid_moves = []
+#     for move in valid_moves:
+#         testboard = copy.deepcopy(board)
+#         testboard[move[0]][move[1]] = testboard[position[0]][position[1]]
+#         testboard[position[0]][position[1]] = None
+#         if not is_any_piece_checking_color(testboard, color):
+#             adjusted_valid_moves.append(move)
+#     return adjusted_valid_moves
 
 
 class Piece:

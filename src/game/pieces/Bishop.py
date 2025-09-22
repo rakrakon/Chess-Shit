@@ -3,7 +3,7 @@ from typing import List, Optional
 from src.game.Aliases import TBoard
 from src.game.Constants import BOARD_SIZE
 from src.game.pieces.King import King
-from src.game.pieces.Piece import Piece, adjust_for_checking
+from src.game.pieces.Piece import Piece
 
 
 class Bishop(Piece):
@@ -31,4 +31,4 @@ class Bishop(Piece):
                 n_row += d_row
                 n_col += d_col
 
-        return adjust_for_checking(self.color, position, board, valid_moves)
+        return valid_moves

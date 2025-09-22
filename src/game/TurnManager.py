@@ -20,6 +20,11 @@ class TurnManager:
     def get_current_turn(self):
         return self.current_turn
 
+    def get_next_turn_color(self):
+        if self.current_turn == Color.WHITE:
+            return Color.BLACK
+        return Color.WHITE
+
     def next_turn(self):
         if self.current_turn == Color.WHITE:
             self.current_turn = Color.BLACK
